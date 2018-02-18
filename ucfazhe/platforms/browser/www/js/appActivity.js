@@ -6,23 +6,30 @@ attribution: 'Map data &copy; <ahref="http://openstreetmap.org">OpenStreetMap</a
 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 id: 'mapbox.streets'
 }).addTo(mymap);
-var geojsonFeature = {
- "type": "Feature",
- "properties": {
- "name": "London",
- "popupContent": "This is where UCL is based"
- },
- "geometry": {
- "type": "Point",
- "coordinates": [-0.118092, 51.509865]
- }
-};
-L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+" "+geojsonFeature.properties.popupContent+"<b>");
-var popup = L.popup();
-function onMapClick(e) {
-popup
-.setLatLng(e.latlng)
-.setContent("You clicked the map at " + e.latlng.toString())
-.openOn(mymap);
+
+function trackLocation() {
+if (navigator.geolocation) {
+navigator.geolocation.watchPosition(showPosition);
+} else {
+document.getElementById('showLocation').innerHTML = "Geolocation is not supported by this browser.";
 }
-mymap.on('click', onMapClick);
+}
+
+function showPosition(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    var latlon = new google.maps.LatLng(lat, lon)
+    var mapholder = document.getElementById('mapholder')
+    mapholder.style.height = '250px';
+    mapholder.style.width = '500px';
+
+    var myOptions = {
+    center:latlon,zoom:14,
+    mapTypeId:google.maps.MapTypeId.ROADMAP,
+    mapTypeControl:false,
+    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+    }
+	
+var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
+var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+}	
