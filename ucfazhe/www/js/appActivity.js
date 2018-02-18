@@ -16,48 +16,10 @@ document.getElementById('showLocation').innerHTML = "Geolocation is not supporte
 }
 
 function showPosition(position) {
-	var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-
-	document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude +
-	"<br>Longitude: " + position.coords.longitude;
-	
-	showMap(latitude, longitude);
-	}
-
-	function showMap(latitude, longitude) {
-	var mapLatAndLong = new mymap.LatLng(latitude, longitude);
-
-	var mapOptions = {
-		zoom: 15,
-		center: mapLatAndLong,
-		
-	};
-
-	var element = document.getElementById("map");
-	var map = new mymap.Map(element, mapOptions);
-
-	addMarker(map, mapLatAndLong, "Your Location", "It's here.");
+var latitude = position.coords.latitude;
+var longitude = position.coords.longitude;
+document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude +
+"<br>Longitude: " + position.coords.longitude;
+L.marker([latitude, longitude]).addTo(mymap)
+			.bindPopup("<b>You are here</b>").openPopup();
 }
-
-function addMarker(map, latlong, title, content) {
-	var markerOptions = {
-		position: latlong,
-		map: map,
-		title: title,
-		clickable: true
-	};
-
-	var marker = new mymap.Marker(markerOptions);
-
-	var infoWindowOptions = {
-		content: content,
-		position: latlong
-	};
-
-	var infoWindow = new mymap.InfoWindow(infoWindowOptions);
-
-	mymap.event.addListener(marker, "click", function() {
-		infoWindow.open(map);
-	});
-}	
