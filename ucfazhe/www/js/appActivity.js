@@ -16,20 +16,48 @@ document.getElementById('showLocation').innerHTML = "Geolocation is not supporte
 }
 
 function showPosition(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-    var latlon = new google.maps.LatLng(lat, lon)
-    var mapholder = document.getElementById('mapholder')
-    mapholder.style.height = '250px';
-    mapholder.style.width = '500px';
+	var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
 
-    var myOptions = {
-    center:latlon,zoom:14,
-    mapTypeId:google.maps.MapTypeId.ROADMAP,
-    mapTypeControl:false,
-    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-    }
+	document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude +
+	"<br>Longitude: " + position.coords.longitude;
 	
-var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
-var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+	showMap(latitude, longitude);
+	}
+
+	function showMap(latitude, longitude) {
+	var mapLatAndLong = new mymap.LatLng(latitude, longitude);
+
+	var mapOptions = {
+		zoom: 15,
+		center: mapLatAndLong,
+		
+	};
+
+	var element = document.getElementById("map");
+	var map = new mymap.Map(element, mapOptions);
+
+	addMarker(map, mapLatAndLong, "Your Location", "It's here.");
+}
+
+function addMarker(map, latlong, title, content) {
+	var markerOptions = {
+		position: latlong,
+		map: map,
+		title: title,
+		clickable: true
+	};
+
+	var marker = new mymap.Marker(markerOptions);
+
+	var infoWindowOptions = {
+		content: content,
+		position: latlong
+	};
+
+	var infoWindow = new mymap.InfoWindow(infoWindowOptions);
+
+	mymap.event.addListener(marker, "click", function() {
+		infoWindow.open(map);
+	});
 }	
