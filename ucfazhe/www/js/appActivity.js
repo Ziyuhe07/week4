@@ -20,8 +20,8 @@
 	function showPosition(position) {
 	var latitude = position.coords.latitude;
 	var longitude = position.coords.longitude;
-	document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude +
-	"<br>Longitude: " + position.coords.longitude;
+	document.getElementById('showLocation').innerHTML = "Latitude: " + latitude +
+	"<br>Longitude: " + longitude;
 	L.marker([latitude, longitude]).addTo(mymap)
 			.bindPopup("<b>You are here</b>").openPopup();
 	}
