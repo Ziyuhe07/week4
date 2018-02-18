@@ -138,11 +138,14 @@
       <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
       <div id="mapid" style="width: 600px; height: 400px;"></div>
 	  <b>This code will display your current location</b>
-	  <div id='showLocation'>Location will be displayed here</div>
+	  <p id="demo">Click the button to get your position.</p>
+
+	  <div id="mapholder"></div>
 	  <button id='trackLocation' onclick='trackLocation();return false;'>Click Me to Get Your Location</button>
       </div>
       </main>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="./js/appActivity.js"></script>
+	<script src="https://maps.google.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU"></script>
   </body>
 </html>
