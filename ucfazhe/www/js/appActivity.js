@@ -6,23 +6,16 @@ attribution: 'Map data &copy; <ahref="http://openstreetmap.org">OpenStreetMap</a
 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 id: 'mapbox.streets'
 }).addTo(mymap);
-var geojsonFeature = {
- "type": "Feature",
- "properties": {
- "name": "London",
- "popupContent": "This is where UCL is based"
- },
- "geometry": {
- "type": "Point",
- "coordinates": [-0.118092, 51.509865]
- }
-};
-L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+" "+geojsonFeature.properties.popupContent+"<b>");
-var popup = L.popup();
-function onMapClick(e) {
-popup
-.setLatLng(e.latlng)
-.setContent("You clicked the map at " + e.latlng.toString())
-.openOn(mymap);
+
+function trackLocation() {
+if (navigator.geolocation) {
+navigator.geolocation.watchPosition(showPosition);
+} else {
+document.getElementById('showLocation').innerHTML = "Geolocation is not supported by this browser.";
 }
-mymap.on('click', onMapClick);
+}
+function showPosition(position) {
+document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude +
+"<br>Longitude: " + position.coords.longitude;
+}
+
