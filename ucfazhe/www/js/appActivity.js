@@ -22,6 +22,8 @@
 	var longitude = position.coords.longitude;
 	document.getElementById('showLocation').innerHTML = "Latitude: " + latitude +
 	"<br>Longitude: " + longitude;
-	L.marker([latitude, longitude]).addTo(mymap)
-			.bindPopup("<b>You are here</b>").openPopup();
+	 map.addMarker({
+        latitude: latitude,
+        longitude: longitude
+      });
 	}
